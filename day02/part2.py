@@ -1,5 +1,33 @@
+import sys
 from collections import namedtuple
 from enum import Enum, auto
+from pathlib import Path
+
+proj_path = Path(__file__).parents[1].resolve()
+sys.path.append(str(proj_path))
+import util
+
+# Basic metadata
+YEAR = "2023"
+DAY = "02"
+PART = "02"
+
+# Create a parser with a boolean flag to toggle test mode
+parser = util.parser.default_parser(year=YEAR, day=DAY, part=PART)
+args = parser.parse_args()
+
+# Core or "base" input file name
+input_file = "input.txt"
+
+# If test mode (-t | --test) was used, prepend "test_" to the input file name
+# to run against a test file instead
+if args.test:
+    input_file = f"test_{input_file}"
+
+# Get the absolute path of the input file
+input_file = str(Path(f"day{DAY}", input_file).resolve())
+
+# ========================================== SOLUTION START ==========================================
 
 # Store the possible moves
 class Moves(Enum):
@@ -11,18 +39,21 @@ class Moves(Enum):
 # Store what move each letter represents
 move_map = {
     "A": Moves.ROCK,
-    "X": Moves.ROCK,
     "B": Moves.PAPER,
-    "Y": Moves.PAPER,
     "C": Moves.SCISSORS,
-    "Z": Moves.SCISSORS,
 }
 
 # Store what move beats what
 winning_moves = {
+    Moves.ROCK: Moves.SCISSORS,
     Moves.PAPER: Moves.ROCK,
     Moves.SCISSORS: Moves.PAPER,
-    Moves.ROCK: Moves.SCISSORS,
+}
+# Stores what move loses to what
+losing_moves = {
+    Moves.ROCK: Moves.PAPER,
+    Moves.PAPER: Moves.SCISSORS,
+    Moves.SCISSORS: Moves.ROCK,
 }
 
 # Store how much points each move earns when it wins
@@ -32,7 +63,7 @@ move_points = {Moves.ROCK: 1, Moves.PAPER: 2, Moves.SCISSORS: 3}
 result_points = {"win": 6, "draw": 3, "lose": 0}
 
 # Get the game data
-with open("input.txt") as f:
+with open(input_file) as f:
     rounds = f.readlines()
 
 # Structure the data
@@ -47,7 +78,13 @@ for round in rounds:
 total_points: list[int] = []
 for move in moves:
     opp_move = move_map[move.opp]
-    res_move = move_map[move.res]
+    # X: Lose | Y: Draw | Z: Win
+    if move.res == "X":
+        res_move = winning_moves[opp_move]
+    if move.res == "Y":
+        res_move = opp_move
+    if move.res == "Z":
+        res_move = losing_moves[opp_move]
 
     points = 0
 

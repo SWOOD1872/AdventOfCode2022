@@ -1,7 +1,7 @@
 import argparse
 
 
-def default_parser(year: int, day: int, part: int) -> argparse.ArgumentParser:
+def default_parser(year: str, day: str, part: str) -> argparse.ArgumentParser:
     # Create the parser
     parser = argparse.ArgumentParser(
         description=f"Advent of Code {year} Day {day} Part {part}"
