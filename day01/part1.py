@@ -9,7 +9,7 @@ import util
 
 # Basic metadata
 YEAR = 2023
-DAY = 3
+DAY = 1
 PART = 1
 
 # Core or 'base' input file name

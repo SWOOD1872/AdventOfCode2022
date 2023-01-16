@@ -9,8 +9,8 @@ import util
 
 # Basic metadata
 YEAR = 2023
-DAY = 3
-PART = 1
+DAY = 1
+PART = 2
 
 # Core or 'base' input file name
 input_file = "input.txt"
