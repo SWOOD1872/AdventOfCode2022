@@ -6,7 +6,7 @@ sys.path.append(str(proj_path))
 import util
 
 # Basic metadata
-YEAR = "2023"
+YEAR = "2022"
 DAY = "01"
 PART = "01"
 
