@@ -28,7 +28,7 @@ input_file = str(Path(f"day{DAY}", input_file).resolve())
 
 # ========================================== SOLUTION START ==========================================
 
-# Temporary to avoid having to parse the stack info from the input file
+# Hard coded the stack to avoid having to parse the stack from the input file
 # Each crate stack is TOP -> BOTTOM
 stack: dict[int, list[str]] = {
     1: ["V", "J", "B", "D"],
